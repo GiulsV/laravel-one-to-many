@@ -29,6 +29,9 @@ class PostController extends Controller
     public function create()
     {
         //
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -50,8 +53,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-
-        return view('admin.posts.show', compact('post'));
+        //
+        if(!$post){
+            abort(404);
+        }
+        $category = Category::find($post->category_id);
+        return view('admin.posts.show', compact('post', 'category'));
     }
 
     /**

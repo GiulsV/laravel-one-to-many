@@ -13,8 +13,14 @@ class AddForeingKeyCategoryToPosts extends Migration
      */
     public function up()
     {
+        //
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignId('category_id')->constrained();
+
+            $table->unsignedBigInteger('category_id');
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')->setDelete('set null');
         });
     }
 
